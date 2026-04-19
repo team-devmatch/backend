@@ -4,7 +4,7 @@ Spring Boot 기반 REST API 서버
 
 ## 기술 스택
 - Java 17
-- Spring Boot 3.x
+- Spring Boot
 - Spring Security + JWT
 - JPA & Spring Data JPA
 - PostgreSQL (메인 DB)
