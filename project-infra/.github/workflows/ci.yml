@@ -1,0 +1,24 @@
+name: CI Pipeline # GitHub Actions 워크플로우 이름
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 코드 체크아웃
+      uses: actions/checkout@v3
+
+    - name: 인프라 파일 확인
+      run: |
+        echo "인프라 설정 파일 확인 완료"
+        ls -la
+
+    - name: Docker Compose 문법 확인
+      run: |
+        docker compose config
