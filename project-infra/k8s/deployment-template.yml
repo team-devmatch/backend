@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: SERVICE_NAME
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: SERVICE_NAME
+  template:
+    metadata:
+      labels:
+        app: SERVICE_NAME
+    spec:
+      containers:
+      - name: SERVICE_NAME
+        image: DOCKER_HUB_ID/IMAGE_NAME:latest
+        ports:
+        - containerPort: PORT_NUMBER
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: SERVICE_NAME
+  namespace: default
+spec:
+  selector:
+    app: SERVICE_NAME
+  ports:
+  - protocol: TCP
+    port: PORT_NUMBER
+    targetPort: PORT_NUMBER
+  type: ClusterIP
