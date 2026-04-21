@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # backend
 
 Spring Boot 기반 REST API 서버
@@ -45,7 +44,7 @@ users
 ### auth
 - POST/login -> 로그인
 
-=======
+
 ## CRUD
 ### users
 
@@ -54,6 +53,7 @@ users
 
 ### auth
 - **POST**/login -> 로그인
+
 
 
 
@@ -70,6 +70,8 @@ users
 
 
 ---
+
+
 
 
 
