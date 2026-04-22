@@ -28,6 +28,11 @@ public class JwtFilter extends OncePerRequestFilter {
         System.out.println("Auth: " + request.getHeader("Authorization"));
         System.out.println("filter 실행 확인");
 
+        if (request.getRequestURI().equals("/users/register")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         //System.out.println("header : " + request.getHeader(HttpHeaders.AUTHORIZATION));
         //Authorization 헤더에서 JWT 꺼내기
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
