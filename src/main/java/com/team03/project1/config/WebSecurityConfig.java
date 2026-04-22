@@ -32,6 +32,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/users/register").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/images/**", "/uploads/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/festivals/**").permitAll()
                         //Swagger 허용
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
