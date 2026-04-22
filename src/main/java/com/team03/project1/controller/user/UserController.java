@@ -63,7 +63,7 @@ public class UserController {
 
     }
     // 내 정보 조회(마이페이지)
-    @GetMapping("/me")
+    @GetMapping("/mypage")
     @SecurityRequirement(name="JWT")
     @Operation(
             summary = "내 정보 조회",
@@ -91,5 +91,31 @@ public class UserController {
         return ResponseEntity.ok(userDto);
 
     }
+/*
+    @PutMapping("/mypage/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @SecurityRequirement(name="JWT")
+    @Operation(
+            summary = "이미지 변경",
+            description = "이미지를 변경합니다"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "변경 성공",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Void.class) // void.class: void를 클래스 형태로 표현, 응답 바디가 없다
+                    )
+            ),
+            @ApiResponse(responseCode = "404", description = "변경 실패",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Void.class)
+                    )
+            )
+    })
+    public ResponseEntity<Void> update(@RequestParam(value="file", required = false) MultipartFile multipartFile, Authentication authentication){
+        UserService.modify(multipartFile, authentication.getName());
 
+        return ResponseEntity.ok().build();
+    }
+ */
 }

@@ -10,17 +10,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
@@ -54,7 +50,7 @@ public class AuthController {
                     )
             )
     })
-    public ResponseEntity<Map<String, String>> login(@ParameterObject @ModelAttribute LoginDto loginDto){
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginDto loginDto){
         System.out.println("loginDto => " + loginDto);
         //로그인 인증(토큰), Spring Security용 "로그인 요청 객체"
         UsernamePasswordAuthenticationToken token =

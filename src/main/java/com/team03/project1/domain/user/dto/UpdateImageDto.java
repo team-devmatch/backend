@@ -1,4 +1,12 @@
 package com.team03.project1.domain.user.dto;
 
-public class UpdataImageDto {
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class UpdateImageDto {
+    private String updateProfileImage;
 }

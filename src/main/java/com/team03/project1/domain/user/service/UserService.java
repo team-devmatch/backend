@@ -56,4 +56,7 @@ public class UserService {
 
         return new UserDto(userEntity);
     }
+//    public void modify(MultipartFile multipartFile, String email){
+//
+//    }
 }
