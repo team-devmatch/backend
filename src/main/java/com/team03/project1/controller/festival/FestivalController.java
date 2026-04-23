@@ -19,9 +19,8 @@ import java.util.List;
 @RequestMapping("/festivals")
 public class FestivalController {
     @Autowired
-
     private FestivalRepository festivalRepository;
-
+    @Autowired
     private FestivalService festivalService;
 
 
