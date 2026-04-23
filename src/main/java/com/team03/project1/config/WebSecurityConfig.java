@@ -1,4 +1,5 @@
 package com.team03.project1.config;
+// 접근 권한 허용
 
 import com.team03.project1.exception.JwtAccessDeniedHandler;
 import com.team03.project1.exception.JwtAuthEntryPoint;
@@ -20,7 +21,6 @@ import java.util.List;
 
 @EnableWebSecurity
 @Configuration
-// 접근 권한 허용
 public class WebSecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
@@ -40,6 +40,9 @@ public class WebSecurityConfig {
                         .requestMatchers("/images/**", "/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/festivals/**").permitAll()
                         //Swagger 허용
+                        .requestMatchers(HttpMethod.GET,"/api/boards").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/boards/**").permitAll()
+
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
