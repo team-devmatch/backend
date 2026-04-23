@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name="festival")
+@Table(name="festival", schema = "public")
 public class FestivalEntity {
     // 기본 정보
     @Id
