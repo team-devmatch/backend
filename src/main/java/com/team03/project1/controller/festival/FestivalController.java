@@ -1,5 +1,6 @@
 package com.team03.project1.controller.festival;
 
+import com.team03.project1.domain.festival.dto.FestivalDetailDto;
 import com.team03.project1.domain.festival.dto.FestivalDto;
 import com.team03.project1.domain.festival.entity.FestivalEntity;
 import com.team03.project1.domain.festival.repository.FestivalRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,5 +42,11 @@ public class FestivalController {
     @GetMapping("/recommend")
     public ResponseEntity<List<FestivalDto>> getRecommendFestival() {
         return ResponseEntity.ok(festivalService.getRecommendFestival());
+    }
+
+    // 상세정보
+    @GetMapping("/{id}")
+    public ResponseEntity<FestivalDetailDto> getDetailFestival(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(festivalService.getDetailFestival(id));
     }
 }
