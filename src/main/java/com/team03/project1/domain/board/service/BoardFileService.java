@@ -25,6 +25,6 @@ public class BoardFileService {
         } catch (IOException e) {
             throw new RuntimeException("파일 저장 실패", e);
         }
-        return "http://localhost:8080/images/" + fileName;
+        return "/uploads/board/" + fileName;
     }
 }
