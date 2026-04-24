@@ -83,8 +83,9 @@ public class FestivalService {
         return new FestivalDetailDto(festivalEntity, festivalDetailEntity);
     }
 
+
     // 축제 정보 페이지
-    public Page<FestivalInfoDto> getFestivals(String theme, String keyword, Pageable pageable){
+    public Page<FestivalInfoDto> getFestivals(String theme, String keyword, Pageable pageable) {
         if (keyword != null && !keyword.isBlank()
                 && theme != null && !theme.isBlank() && !theme.equals("전체")) {
             return festivalRepository.searchAndFilter(keyword, theme, pageable)
@@ -103,6 +104,5 @@ public class FestivalService {
 
         return festivalRepository.findAll(pageable)
                 .map(FestivalInfoDto::new);
-
     }
 }
