@@ -79,4 +79,25 @@ public class FestivalService {
 
         return new FestivalDetailDto(festivalEntity, festivalDetailEntity);
     }
+
+    // 테마별 필터 조회
+    public List<FestivalDto> getFestivalByTheme(String theme) {
+        List<FestivalEntity> festivals;
+
+        if (theme == null || theme.isEmpty() || theme.equals("전체")) {
+            festivals = festivalRepository.findAllByOrderByStartDateAsc();
+        } else {
+            festivals = festivalRepository.findByThemeOrderByStartDateAsc(theme);
+        }
+
+        return festivals.stream()
+                .map(f -> new FestivalDto(
+                        f.getFestivalId(),
+                        f.getName(),
+                        f.getImageUrl(),
+                        f.getStartDate(),
+                        f.getEndDate()
+                ))
+                .toList();
+    }
 }
