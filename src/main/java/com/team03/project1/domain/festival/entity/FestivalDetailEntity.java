@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name="festival_detail")
+@Table(name="festival_detail", schema = "public")
 public class FestivalDetailEntity {
     // 상세정보
     @Id
@@ -17,10 +17,11 @@ public class FestivalDetailEntity {
     @Column(name = "detail_id", nullable = false)
     private Long detailId;
     //외래키 설정
+    //@JsonIgnore
     @OneToOne
     @JoinColumn(name = "festival_id", nullable = false)
     private FestivalEntity festivalEntity;
-
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Column(length = 50)
     private String tel;
