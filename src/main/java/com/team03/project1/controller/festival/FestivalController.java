@@ -8,10 +8,7 @@ import com.team03.project1.domain.festival.service.FestivalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,5 +45,12 @@ public class FestivalController {
     @GetMapping("/{id}")
     public ResponseEntity<FestivalDetailDto> getDetailFestival(@PathVariable("id") Long id) {
         return ResponseEntity.ok(festivalService.getDetailFestival(id));
+    }
+
+    // 테마별 필터 조회
+    @GetMapping("/theme")
+    public ResponseEntity<List<FestivalDto>> getFestivalByTheme(
+            @RequestParam(required = false) String theme) {
+        return ResponseEntity.ok(festivalService.getFestivalByTheme(theme));
     }
 }
