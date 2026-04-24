@@ -20,7 +20,7 @@ public class UserDto {
         String fileName = userEntity.getProfile_image();
 
         if(fileName == null || fileName.equals("default.png")){
-            this.profile_image = "/images/default.png";
+            this.profile_image = "http://localhost:8080/images/default.png";
         } else {
             this.profile_image = "/uploads/user/" + fileName;
         }
