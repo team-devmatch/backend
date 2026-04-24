@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.List;
 
@@ -38,25 +40,46 @@ public class BoardController {
     }
 
     //게시글 작성
-    @PostMapping
+    @SecurityRequirement(name = "JWT")
+    @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<PostResponseDto> createPost(
-            @RequestBody PostRequestDto request,
+            @RequestParam String category,
+            @RequestParam String title,
+            @RequestParam String content,
+            @RequestParam(required = false) MultipartFile image,
             @AuthenticationPrincipal UserDetails userDetails){
+        PostRequestDto request = PostRequestDto.builder()
+                .category(category)
+                .title(title)
+                .content(content)
+                .image(image)
+                .build();
         return ResponseEntity.ok(
                 boardService.createPost(request, userDetails.getUsername()));
     }
 
     //게시글 수정
-    @PutMapping("/{postId}")
+    @SecurityRequirement(name = "JWT")
+    @PutMapping(value = "/{postId}", consumes = "multipart/form-data")
     public ResponseEntity<PostResponseDto> updatePost(
             @PathVariable Long postId,
-            @RequestBody PostRequestDto request,
+            @RequestParam String category,
+            @RequestParam String title,
+            @RequestParam String content,
+            @RequestParam(required = false) MultipartFile image,
             @AuthenticationPrincipal UserDetails userDetails){
+        PostRequestDto request = PostRequestDto.builder()
+                .category(category)
+                .title(title)
+                .content(content)
+                .image(image)
+                .build();
         return ResponseEntity.ok(
                 boardService.updatePost(postId, request, userDetails.getUsername()));
     }
 
     //게시글 삭제
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(
             @PathVariable Long postId,
@@ -66,6 +89,7 @@ public class BoardController {
     }
 
     //좋아요 토글
+    @SecurityRequirement(name = "JWT")
     @PostMapping("/{postId}/like")
     public ResponseEntity<Boolean> toggleLike(
             @PathVariable Long postId,
@@ -82,6 +106,7 @@ public class BoardController {
     }
 
     //댓글 작성
+    @SecurityRequirement(name = "JWT")
     @PostMapping("/{postId}/comments")
     public ResponseEntity<CommentResponseDto> createComment(
             @PathVariable Long postId,
@@ -92,6 +117,7 @@ public class BoardController {
     }
 
     //댓글 수정
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/comments/{commentId}")
     public ResponseEntity<CommentResponseDto> updateComments(
             @PathVariable Long commentId,
@@ -102,6 +128,7 @@ public class BoardController {
     }
 
     //댓글 삭제
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(
             @PathVariable Long commentId,

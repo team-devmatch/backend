@@ -8,6 +8,10 @@ import com.team03.project1.domain.board.entity.*;
 import com.team03.project1.domain.board.repository.*;
 import com.team03.project1.domain.user.entity.UserEntity;
 import com.team03.project1.domain.user.repository.UserRepository;
+import com.team03.project1.exception.CommentNotFoundException;
+import com.team03.project1.exception.PostNotFoundException;
+import com.team03.project1.exception.UnauthorizedException;
+import com.team03.project1.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +26,7 @@ public class BoardService {
     private final CommentRepository commentRepository;
     private final PostLikeRepository postLikeRepository;
     private final UserRepository userRepository;
+    private final BoardFileService boardFileService;
 
     //게시글 목록 조회
     @Transactional(readOnly = true)
@@ -48,7 +53,7 @@ public class BoardService {
     @Transactional
     public PostResponseDto getPost(Long postId, String email){
         PostEntity post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+                .orElseThrow(() -> new PostNotFoundException("게시글을 찾을 수 없습니다."));
         post.increaseViewCount();
         UserEntity user = (email != null)
                 ? userRepository.findByEmail(email).orElse(null)
@@ -64,13 +69,16 @@ public class BoardService {
     @Transactional
     public PostResponseDto createPost(PostRequestDto request, String email){
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(()-> new UserNotFoundException("유저를 찾을 수 없습니다."));
+
+        String imageUrl = boardFileService.saveFile(request.getImage());
+
         PostEntity post = PostEntity.builder()
                 .user(user)
                 .category(request.getCategory())
                 .title(request.getTitle())
                 .content(request.getContent())
-                .imageUrl(request.getImageUrl())
+                .imageUrl(imageUrl)
                 .build();
         postRepository.save(post);
         return PostResponseDto.from(post,0,false);
@@ -80,12 +88,17 @@ public class BoardService {
     @Transactional
     public PostResponseDto updatePost(Long postId, PostRequestDto request, String email){
         PostEntity post = postRepository.findById(postId)
-                .orElseThrow(()-> new RuntimeException("게시글을 찾을 수 없습니다."));
+                .orElseThrow(()-> new PostNotFoundException("게시글을 찾을 수 없습니다."));
         if(!post.getUser().getEmail().equals(email)){
-            throw new RuntimeException("본인 게시글만 수정 할 수 있습니다.");
+            throw new UnauthorizedException("본인 게시글만 수정 할 수 있습니다.");
         }
+
+        String imageUrl = request.getImage() != null && !request.getImage().isEmpty()
+                ? boardFileService.saveFile(request.getImage())
+                : post.getImageUrl();
+
         post.update(request.getTitle(), request.getContent(),
-                request.getCategory(), request.getImageUrl());
+                request.getCategory(), imageUrl);
         int commentCount = commentRepository.countByPost(post);
         boolean isLiked = postLikeRepository.existsByPostAndUser(
                 post, post.getUser());
@@ -96,9 +109,9 @@ public class BoardService {
     @Transactional
     public void deletePost(Long postId, String email){
           PostEntity post = postRepository.findById(postId)
-                  .orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다."));
+                  .orElseThrow(()->new PostNotFoundException("게시글을 찾을 수 없습니다."));
           if(!post.getUser().getEmail().equals(email)){
-              throw new RuntimeException("본인 게시글만 삭제 할 수 있습니다.");
+              throw new UnauthorizedException("본인 게시글만 삭제 할 수 있습니다.");
           }
           postRepository.delete(post);
     }
@@ -107,9 +120,9 @@ public class BoardService {
     @Transactional
     public boolean toggleLike(Long postId, String email){
         PostEntity post = postRepository.findById(postId)
-                .orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다."));
+                .orElseThrow(()->new PostNotFoundException("게시글을 찾을 수 없습니다."));
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(()->new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(()->new UserNotFoundException("유저를 찾을 수 없습니다."));
         if(postLikeRepository.existsByPostAndUser(post, user)){
             PostLikeEntity like = postLikeRepository
                     .findByPostAndUser(post, user).get();
@@ -131,7 +144,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<CommentResponseDto> getComments(Long postId){
         PostEntity post = postRepository.findById(postId)
-                .orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다."));
+                .orElseThrow(()->new PostNotFoundException("게시글을 찾을 수 없습니다."));
         List<CommentEntity> comments = commentRepository.findByPostOrderByCreatedAtDesc(post);
         return comments.stream()
                 .map(comment -> CommentResponseDto.from(comment))
@@ -143,9 +156,9 @@ public class BoardService {
     public CommentResponseDto createComment(Long postId,
             CommentRequestDto request, String email){
         PostEntity post = postRepository.findById(postId)
-                .orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다."));
+                .orElseThrow(()->new PostNotFoundException("게시글을 찾을 수 없습니다."));
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(()->new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(()->new UserNotFoundException("유저를 찾을 수 없습니다."));
         CommentEntity comment = CommentEntity.builder()
                 .post(post)
                 .user(user)
@@ -160,9 +173,9 @@ public class BoardService {
     public CommentResponseDto updateComment(Long commentId,
              CommentRequestDto request, String email) {
         CommentEntity comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("댓글을 찾을 수 없습니다."));
+                .orElseThrow(() -> new CommentNotFoundException("댓글을 찾을 수 없습니다."));
         if (!comment.getUser().getEmail().equals(email)) {
-            throw new RuntimeException("본인 댓글만 수정 할 수 있습니다.");
+            throw new UnauthorizedException("본인 댓글만 수정 할 수 있습니다.");
         }
         comment.update(request.getContent());
         return CommentResponseDto.from(comment);
@@ -172,9 +185,9 @@ public class BoardService {
     @Transactional
     public void deleteComment(Long commentId, String email){
         CommentEntity comment = commentRepository.findById(commentId)
-                .orElseThrow(()->new RuntimeException("댓글을 찾을 수 없습니다."));
+                .orElseThrow(()->new CommentNotFoundException("댓글을 찾을 수 없습니다."));
         if(!comment.getUser().getEmail().equals(email)){
-            throw new RuntimeException("본인 댓글만 삭제 할 수 있습니다.");
+            throw new UnauthorizedException("본인 댓글만 삭제 할 수 있습니다.");
         }
         commentRepository.delete(comment);
     }
