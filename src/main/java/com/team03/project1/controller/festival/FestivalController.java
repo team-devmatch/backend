@@ -54,6 +54,7 @@ public class FestivalController {
         return ResponseEntity.ok(festivalService.getDetailFestival(id));
     }
 
+
     //축제정보 페이지(전체,필터,검색)
     @GetMapping
     public ResponseEntity<Page<FestivalInfoDto>> getFestivals(
