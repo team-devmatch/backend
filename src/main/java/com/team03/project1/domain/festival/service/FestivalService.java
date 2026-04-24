@@ -2,6 +2,7 @@ package com.team03.project1.domain.festival.service;
 
 import com.team03.project1.domain.festival.dto.FestivalDetailDto;
 import com.team03.project1.domain.festival.dto.FestivalDto;
+import com.team03.project1.domain.festival.dto.FestivalInfoDto;
 import com.team03.project1.domain.festival.entity.FestivalDetailEntity;
 import com.team03.project1.domain.festival.entity.FestivalEntity;
 import com.team03.project1.domain.festival.repository.FestivalRepository;
@@ -10,6 +11,8 @@ import com.team03.project1.domain.festival.repository.RecentFestivalRepository;
 import com.team03.project1.domain.festival.repository.RecommendFestivalRepository;
 import com.team03.project1.exception.FestivalNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,5 +81,28 @@ public class FestivalService {
         FestivalDetailEntity festivalDetailEntity = festivalEntity.getFestivalDetailEntity();
 
         return new FestivalDetailDto(festivalEntity, festivalDetailEntity);
+    }
+
+    // 축제 정보 페이지
+    public Page<FestivalInfoDto> getFestivals(String theme, String keyword, Pageable pageable){
+        if (keyword != null && !keyword.isBlank()
+                && theme != null && !theme.isBlank() && !theme.equals("전체")) {
+            return festivalRepository.searchAndFilter(keyword, theme, pageable)
+                    .map(FestivalInfoDto::new);
+        }
+
+        if (keyword != null && !keyword.isBlank()) {
+            return festivalRepository.search(keyword, pageable)
+                    .map(FestivalInfoDto::new);
+        }
+
+        if (theme != null && !theme.isBlank() && !theme.equals("전체")) {
+            return festivalRepository.filterByTheme(theme, pageable)
+                    .map(FestivalInfoDto::new);
+        }
+
+        return festivalRepository.findAll(pageable)
+                .map(FestivalInfoDto::new);
+
     }
 }

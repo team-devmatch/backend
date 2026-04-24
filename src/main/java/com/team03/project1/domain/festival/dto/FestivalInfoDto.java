@@ -9,15 +9,15 @@ import org.springframework.beans.BeanUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class FestivalDto {
+public class FestivalInfoDto {
     private Long festivalId;
     private String name;
     private String imageUrl;
     private String startDate;
     private String endDate;
+    private String theme;
 
-    public FestivalDto(FestivalEntity festivalEntity) {
+    public FestivalInfoDto(FestivalEntity festivalEntity) {
         BeanUtils.copyProperties(festivalEntity, this);
     }
-
 }
