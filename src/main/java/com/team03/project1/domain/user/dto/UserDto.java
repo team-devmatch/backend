@@ -2,7 +2,6 @@ package com.team03.project1.domain.user.dto;
 
 import com.team03.project1.domain.user.entity.UserEntity;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -14,13 +13,14 @@ public class UserDto {
     private String nickname;
 
     public UserDto(UserEntity userEntity){
-        BeanUtils.copyProperties(userEntity, this);
+        this.email = userEntity.getEmail();
+        this.nickname = userEntity.getNickname();
 
         //이미지 url 설정
         String fileName = userEntity.getProfile_image();
 
-        if(fileName == null || fileName.equals("default.png")){
-            this.profile_image = "http://localhost:8080/images/default.png";
+        if(fileName == null){
+            this.profile_image = "/images/default.png";
         } else {
             this.profile_image = "/uploads/user/" + fileName;
         }
