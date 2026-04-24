@@ -20,9 +20,6 @@ public class OpenApiConfig {
                .scheme("bearer")
                 .bearerFormat("JWT");
 
-        SecurityRequirement securityRequirement =
-                new SecurityRequirement().addList("JWT");
-
         return new OpenAPI()
                 .info(
                         new Info()
@@ -36,7 +33,6 @@ public class OpenApiConfig {
                 ))
                 .components(
                        new Components().addSecuritySchemes("JWT",securityScheme)
-                )
-                .addSecurityItem(securityRequirement);
+                );
     }
 }
