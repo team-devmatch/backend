@@ -12,8 +12,9 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Long> 
         SELECT f
         FROM FestivalEntity f
         WHERE CAST(f.endDate AS DATE) >= CURRENT_DATE
+        ORDER BY CAST(f.startDate AS DATE) ASC
     """)
-    Page<FestivalEntity> findAll(Pageable pageable);
+    Page<FestivalEntity> findActiveFestival(Pageable pageable);
 
     @Query("SELECT f FROM FestivalEntity f WHERE f.name LIKE %:keyword%")
     Page<FestivalEntity> search(@Param("keyword") String keyword, Pageable pageable);

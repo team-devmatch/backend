@@ -24,7 +24,7 @@ public class FestivalController {
     @Autowired
     private FestivalRepository festivalRepository;
 
-    //@GetMapping("/test")
+    @GetMapping("/test")
     public ResponseEntity<List<FestivalEntity>> test() {
         return ResponseEntity.ok(festivalRepository.findAll(Sort.by("festivalId")));
     }
