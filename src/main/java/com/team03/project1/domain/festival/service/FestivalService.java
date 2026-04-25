@@ -102,7 +102,7 @@ public class FestivalService {
                     .map(FestivalInfoDto::new);
         }
 
-        return festivalRepository.findAll(pageable)
+        return festivalRepository.findActiveFestival(pageable)
                 .map(FestivalInfoDto::new);
     }
 }
