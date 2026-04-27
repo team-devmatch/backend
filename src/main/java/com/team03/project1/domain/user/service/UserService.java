@@ -35,9 +35,18 @@ public class UserService {
         } //파일 저장
         userEntity.setProfileImage(profile_image);
 
-        boolean bool = userRepository.existsByEmail(userRegDto.getEmail()); //이메일(id) 중복 확인
-        if(bool)
-            throw new UserDuplicateException("이메일이 존재합니다"); //이메일 존재 예외 발생
+        UserEntity user = userRepository.findByEmail(userRegDto.getEmail()).orElse(null); //이메일(id) 중복 확인
+        if(user != null){
+            if (user.isDeleted()) {
+                // 탈퇴한 계정으로 재가입 할 수 있도록 함
+                user.setDeleted(false);
+                user.setPassword(passwordEncoder.encode(userRegDto.getPassword()));
+                user.setNickname(userRegDto.getNickname());
+                return;
+            } else {
+                throw new UserDuplicateException("이메일이 존재합니다");//이메일 존재 예외 발생
+            }
+        }
 
         if(!userRegDto.getPassword().equals(userRegDto.getPasswordCheck())){ //비밀번호 일치여부 확인
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다"); //비밀번호 불일치 예외 발생
