@@ -1,5 +1,6 @@
 package com.team03.project1.domain.user.service;
 
+import com.team03.project1.domain.user.dto.PasswordUpdateDto;
 import com.team03.project1.domain.user.dto.UserDto;
 import com.team03.project1.domain.user.dto.UserRegDto;
 import com.team03.project1.domain.user.entity.UserEntity;
@@ -101,11 +102,22 @@ public class UserService {
         }
         userEntity.setProfileImage("default.png");
     }
+    // 비밀번호 변경
+    public void updatePassword(String email, PasswordUpdateDto passwordUpdateDto){
+        UserEntity userEntity = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("사용자가 없습니다"));
+
+        if (!passwordEncoder.matches(passwordUpdateDto.getCurrentPassword(), userEntity.getPassword())) {
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다");
+        }
+
+        userEntity.setPassword(passwordEncoder.encode(passwordUpdateDto.getNewPassword()));
+    }
     // 회원 탈퇴(soft delete)
     public void deleteUser(String email) {
 
         UserEntity userEntity = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("유저 없음"));
+                .orElseThrow(() -> new UserNotFoundException("사용자가 없습니다"));
 
         // 이미지 삭제
         if (userEntity.getProfileImage() != null &&
