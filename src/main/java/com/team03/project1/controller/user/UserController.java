@@ -1,5 +1,6 @@
 package com.team03.project1.controller.user;
 
+import com.team03.project1.domain.user.dto.PasswordUpdateDto;
 import com.team03.project1.domain.user.dto.UserDto;
 import com.team03.project1.domain.user.dto.UserRegDto;
 import com.team03.project1.domain.user.service.UserService;
@@ -129,6 +130,17 @@ public class UserController {
     public ResponseEntity<Void> resetProfileImage(Authentication authentication) {
 
         userService.resetProfileImage(authentication.getName());
+        return ResponseEntity.ok().build();
+    }
+    // 비밀번호 변경
+    @PutMapping("/mypage/password")
+    @SecurityRequirement(name="JWT")
+    @Operation(
+            summary = "비밀번호 변경",
+            description = "비밀번호 변경합니다"
+    )
+    public ResponseEntity<Void> UpdatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto,Authentication authentication) {
+        userService.updatePassword(authentication.getName(), passwordUpdateDto);
         return ResponseEntity.ok().build();
     }
     // 회원 탈퇴(soft delete)

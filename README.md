@@ -40,6 +40,7 @@ Spring Boot 기반 REST API 서버
 - POST /register -> 회원가입
 - PUT /mypage/image -> 이미지 변경
 - DELETE /mypage/image -> 기본 이미지로 변경
+- PUT /mypage/password -> 비밀번호 변경
 - DELETE /mypage/delete
   -> 회원탈퇴(게시글, 댓글 남기기 위해서 soft delete로 설정)
 - soft delete
