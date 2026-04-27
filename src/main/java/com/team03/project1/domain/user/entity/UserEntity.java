@@ -2,6 +2,7 @@ package com.team03.project1.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -25,14 +26,15 @@ public class UserEntity {
     private String nickname;
     @Column(nullable = false)
     private String role;
-    @Column(name = "created_at", updatable = false, insertable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-    //private boolean deleted = false;
+    @Column(name = "deleted")
+    private boolean deleted = false; //회원 탈퇴 표시
 
     @PrePersist
-    public void prePersist(){
-        if(this.role == null)
-            this.role ="USER";
+    public void prePersist() {
+        if (this.role == null)
+            this.role = "USER";
     }
-
 }

@@ -92,7 +92,7 @@ public class UserService {
         }
         userEntity.setProfileImage("default.png");
     }
-/**
+    // 회원 탈퇴(soft delete)
     public void deleteUser(String email) {
 
         UserEntity userEntity = userRepository.findByEmail(email)
@@ -104,8 +104,8 @@ public class UserService {
             userFileService.deleteFile(userEntity.getProfileImage());
         }
 
-        //
-        //userEntity.setDeleted(true);
+
+        userEntity.setDeleted(true);
     }
- **/
+
 }
