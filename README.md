@@ -38,6 +38,8 @@ Spring Boot 기반 REST API 서버
 ### users
 - GET /mypage -> 내 정보 조회
 - POST /register -> 회원가입
+- PUT /mypage/image -> 이미지 변경
+- DELETE /mypage/image -> 기본 이미지로 변경
 
 ### auth
 - POST /login -> 로그인

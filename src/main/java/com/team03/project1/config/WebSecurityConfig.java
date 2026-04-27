@@ -1,8 +1,8 @@
 package com.team03.project1.config;
 // 접근 권한 허용
 
-import com.team03.project1.exception.JwtAccessDeniedHandler;
-import com.team03.project1.exception.JwtAuthEntryPoint;
+import com.team03.project1.exception.user.JwtAccessDeniedHandler;
+import com.team03.project1.exception.user.JwtAuthEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

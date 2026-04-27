@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class UserDto {
-    private String profile_image;
+    private String profileImage;
     private String email;
     private String nickname;
 
@@ -17,12 +17,12 @@ public class UserDto {
         this.nickname = userEntity.getNickname();
 
         //이미지 url 설정
-        String fileName = userEntity.getProfile_image();
+        String fileName = userEntity.getProfileImage();
 
         if(fileName == null){
-            this.profile_image = "/images/default.png";
+            this.profileImage = "/images/default.png";
         } else {
-            this.profile_image = "/uploads/user/" + fileName;
+            this.profileImage = "/uploads/user/" + fileName;
         }
     }
 }

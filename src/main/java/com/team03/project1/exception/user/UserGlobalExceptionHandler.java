@@ -1,4 +1,4 @@
-package com.team03.project1.exception;
+package com.team03.project1.exception.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -42,5 +42,12 @@ public class UserGlobalExceptionHandler {
         problemDetail.setTitle("사용자 없음");
         problemDetail.setDetail(userNotFoundException.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
+    }
+    @ExceptionHandler(FileEmptyException.class)
+    public ResponseEntity<ProblemDetail> fileEmptyHandler(FileEmptyException fileEmptyException){
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("파일 없음");
+        problemDetail.setDetail(fileEmptyException.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 }

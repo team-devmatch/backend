@@ -2,7 +2,7 @@ package com.team03.project1.domain.user.service;
 
 import com.team03.project1.domain.user.entity.UserEntity;
 import com.team03.project1.domain.user.repository.UserRepository;
-import com.team03.project1.exception.InvalidLoginException;
+import com.team03.project1.exception.user.InvalidLoginException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +21,11 @@ public class AuthService implements UserDetailsService {
        UserEntity userEntity = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new InvalidLoginException("로그인 실패"));
+
+//        if (userEntity.isDeleted()) {
+//            throw new InvalidLoginException("사용할 수 없는 계정입니다");
+//        }
+
         return User.builder()
                 .username(userEntity.getEmail())
                 .password(userEntity.getPassword())

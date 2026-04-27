@@ -3,7 +3,7 @@ package com.team03.project1.controller.user;
 import com.team03.project1.config.JwtUtil;
 import com.team03.project1.domain.user.dto.LoginDto;
 import com.team03.project1.domain.user.service.AuthService;
-import com.team03.project1.exception.InvalidLoginException;
+import com.team03.project1.exception.user.InvalidLoginException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

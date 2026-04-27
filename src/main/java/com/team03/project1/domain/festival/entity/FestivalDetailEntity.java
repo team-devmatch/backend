@@ -1,6 +1,5 @@
 package com.team03.project1.domain.festival.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +17,7 @@ public class FestivalDetailEntity {
     @Column(name = "detail_id", nullable = false)
     private Long detailId;
     //외래키 설정
-    @JsonIgnore
+    //@JsonIgnore
     @OneToOne
     @JoinColumn(name = "festival_id", nullable = false)
     private FestivalEntity festivalEntity;

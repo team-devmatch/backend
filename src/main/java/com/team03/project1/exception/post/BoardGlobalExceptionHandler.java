@@ -1,4 +1,4 @@
-package com.team03.project1.exception;
+package com.team03.project1.exception.post;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

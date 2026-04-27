@@ -31,4 +31,24 @@ public class UserFileService {
         }
         return profile_image; //변경되어 있는 파일이름 return
     }
+
+    // 파일 삭제
+    public void deleteFile(String fileName){
+
+        if (fileName == null || fileName.isBlank()) {
+            return;
+        }
+
+        if ("default.png".equals(fileName)) {
+            return;
+        }
+
+        Path path = Paths.get(DIR, fileName);
+
+        try{
+            Files.deleteIfExists(path);
+        } catch (IOException e){
+            throw new RuntimeException("파일 삭제 실패", e);
+        }
+    }
 }

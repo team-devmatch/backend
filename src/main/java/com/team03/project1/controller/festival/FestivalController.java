@@ -25,7 +25,7 @@ public class FestivalController {
     private FestivalService festivalService;
 
 
-    @GetMapping("/test")
+    //@GetMapping("/test")
     public ResponseEntity<List<FestivalEntity>> test() {
         return ResponseEntity.ok(festivalRepository.findAll(Sort.by("festivalId")));
     }

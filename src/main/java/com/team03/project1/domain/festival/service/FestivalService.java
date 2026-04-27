@@ -9,7 +9,7 @@ import com.team03.project1.domain.festival.repository.FestivalRepository;
 import com.team03.project1.domain.festival.repository.MonthFestivalRepository;
 import com.team03.project1.domain.festival.repository.RecentFestivalRepository;
 import com.team03.project1.domain.festival.repository.RecommendFestivalRepository;
-import com.team03.project1.exception.FestivalNotFoundException;
+import com.team03.project1.exception.festival.FestivalNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
