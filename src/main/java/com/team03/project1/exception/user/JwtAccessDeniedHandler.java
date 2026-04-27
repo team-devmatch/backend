@@ -1,4 +1,4 @@
-package com.team03.project1.exception;
+package com.team03.project1.exception.user;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.team03.project1.exception;
+package com.team03.project1.exception.post;
 
 public class CommentNotFoundException extends RuntimeException {
     public CommentNotFoundException() {}

@@ -1,4 +1,4 @@
-package com.team03.project1.exception;
+package com.team03.project1.exception.user;
 
 //닉네임 존재
 public class NickNameDuplicateException extends RuntimeException{

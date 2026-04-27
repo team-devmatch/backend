@@ -39,7 +39,7 @@ public class PostResponseDto {
                 .viewCount(post.getViewCount())
                 .commentCount(commentCount)
                 .nickname(post.getUser().getNickname())
-                .profileImage(post.getUser().getProfile_image())
+                .profileImage(post.getUser().getProfileImage())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .isLiked(isLiked)
