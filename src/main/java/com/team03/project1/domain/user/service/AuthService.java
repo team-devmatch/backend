@@ -21,10 +21,10 @@ public class AuthService implements UserDetailsService {
        UserEntity userEntity = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new InvalidLoginException("로그인 실패"));
-
-//        if (userEntity.isDeleted()) {
-//            throw new InvalidLoginException("사용할 수 없는 계정입니다");
-//        }
+       // 회원탈퇴시 로그인 방지
+       if (userEntity.isDeleted()) {
+           throw new InvalidLoginException("사용할 수 없는 계정입니다");
+       }
 
         return User.builder()
                 .username(userEntity.getEmail())

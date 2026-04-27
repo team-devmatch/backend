@@ -4,6 +4,10 @@
 - POST /register -> 회원가입
 - PUT /mypage/image -> 이미지 변경
 - DELETE /mypage/image -> 기본 이미지로 변경
+- DELETE /mypage/delete
+  -> 회원탈퇴(게시글, 댓글 남기기 위해서 soft delete로 설정)
+- soft delete
+-> db에서 삭제 안되고 상태만 바뀐다(deleted = true)
 
 ### auth
 - POST /login -> 로그인

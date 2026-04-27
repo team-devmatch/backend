@@ -131,12 +131,15 @@ public class UserController {
         userService.resetProfileImage(authentication.getName());
         return ResponseEntity.ok().build();
     }
-/**
+    // 회원 탈퇴(soft delete)
     @DeleteMapping("/mypage/delete")
     @SecurityRequirement(name="JWT")
+    @Operation(
+            summary = "회원 탈퇴",
+            description = "회원 탈퇴합니다"
+    )
     public ResponseEntity<Void> deleteUser(Authentication authentication) {
         userService.deleteUser(authentication.getName());
         return ResponseEntity.noContent().build();
     }
-    */
 }
