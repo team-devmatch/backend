@@ -58,6 +58,8 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    // 프론트에서 백엔드 API 접근할 수 있게 해주는 cors 설정
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
