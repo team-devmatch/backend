@@ -1,4 +1,3 @@
-
 # backend
 
 Spring Boot 기반 REST API 서버
@@ -28,5 +27,6 @@ Spring Boot 기반 REST API 서버
 - password: password
 
 ## 브랜치 규칙
-- feature/기능명 → 기능 개발
+- feature/board-api → 게시판 브랜치
+- leejaewook → 게시판 제외 나머지 브랜치
 - main → 최종 배포 브랜치
