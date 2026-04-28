@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface FestivalRepository extends JpaRepository<FestivalEntity, Long> {
+    //띄우기
     @Query("""
         SELECT f
         FROM FestivalEntity f
@@ -16,13 +17,13 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Long> 
         ORDER BY CAST(f.startDate AS DATE) ASC
     """)
     Page<FestivalEntity> findActiveFestival(Pageable pageable);
-
+    // 검색
     @Query("SELECT f FROM FestivalEntity f WHERE f.name LIKE %:keyword%")
     Page<FestivalEntity> search(@Param("keyword") String keyword, Pageable pageable);
-
+    //필터
     @Query("SELECT f FROM FestivalEntity f WHERE f.theme = :theme")
     Page<FestivalEntity> filterByTheme(@Param("theme") String theme, Pageable pageable);
-
+    //검색+필터
     @Query("""
         SELECT f FROM FestivalEntity f
         WHERE f.name LIKE %:keyword%

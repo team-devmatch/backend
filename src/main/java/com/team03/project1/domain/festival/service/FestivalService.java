@@ -87,22 +87,22 @@ public class FestivalService {
     // 축제 정보 페이지
     public Page<FestivalInfoDto> getFestivals(String theme, String keyword, Pageable pageable) {
         if (keyword != null && !keyword.isBlank()
-                && theme != null && !theme.isBlank() && !theme.equals("전체")) {
+                && theme != null && !theme.isBlank() && !theme.equals("전체")) { //검색+필터
             return festivalRepository.searchAndFilter(keyword, theme, pageable)
                     .map(FestivalInfoDto::new);
         }
 
-        if (keyword != null && !keyword.isBlank()) {
+        if (keyword != null && !keyword.isBlank()) { //검색
             return festivalRepository.search(keyword, pageable)
                     .map(FestivalInfoDto::new);
         }
 
-        if (theme != null && !theme.isBlank() && !theme.equals("전체")) {
+        if (theme != null && !theme.isBlank() && !theme.equals("전체")) { //필터
             return festivalRepository.filterByTheme(theme, pageable)
                     .map(FestivalInfoDto::new);
         }
 
-        return festivalRepository.findActiveFestival(pageable)
+        return festivalRepository.findActiveFestival(pageable) //띄우기
                 .map(FestivalInfoDto::new);
     }
 }
