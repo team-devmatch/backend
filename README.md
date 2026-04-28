@@ -18,8 +18,7 @@ Spring Boot 기반 REST API 서버
 - 축제 필터 (테마별)
 - 축제 후기 등록 / 조회
 - 게시판 글 / 댓글 / 좋아요
-- AI 챗봇 서비스 연동
-
+  
 ## DB 접속 정보
 - host: localhost
 - port: 5432
@@ -29,5 +28,4 @@ Spring Boot 기반 REST API 서버
 
 ## 브랜치 규칙
 - feature/기능명 → 기능 개발
-- fix/버그명 → 버그 수정
 - main → 최종 배포 브랜치
