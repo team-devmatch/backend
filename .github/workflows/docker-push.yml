@@ -33,3 +33,8 @@ jobs:
           context: .
           push: true
           tags: kyungjunoh/backend:latest
+
+      - name: Gradle 빌드
+        run: |
+          chmod +x gradlew
+          ./gradlew bootJar -x test
